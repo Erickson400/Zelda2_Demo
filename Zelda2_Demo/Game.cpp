@@ -1,21 +1,19 @@
 #include "Game.h"
 
 Game::Game(sf::RenderWindow *app) : App(app) {
-	view1.setCenter(sf::Vector2f(App->getSize().x / 2, App->getSize().y / 2));
-	view1.setSize(sf::Vector2f(App->getSize().x, App->getSize().y));
-
+	view1.setCenter(sf::Vector2f(256 / 2, 232 / 2));
+	view1.setSize(sf::Vector2f(256, 232));
 }
 
 void Game::Update() {
-
-
+	intro->Update(delta);
 }
 
 void Game::Rendering() {
 	App->clear();
 	App->setView(view1);
 
-
+	intro->Render(App);
 
 	App->display();
 }
@@ -30,6 +28,7 @@ void Game::EventHandling() {
 		case sf::Keyboard::A: Left = true; break;
 		case sf::Keyboard::S: Down = true; break;
 		case sf::Keyboard::D: Right = true; break;
+		case sf::Keyboard::Space: intro->Disable(); break;
 		}break;
 	case sf::Event::KeyReleased:
 		switch (event.key.code) {
@@ -85,5 +84,5 @@ void Game::KeyCheck() {
 
 Game::~Game() {
 	App->close();
-	delete  App;
+	delete  intro, App;
 }

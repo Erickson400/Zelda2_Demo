@@ -1,11 +1,14 @@
+#define NOMINMAX
 #include <iostream>
+#include <Windows.h>
 #ifndef  GRAPHICS_HPP
 #include <SFML\Graphics.hpp>
 #endif
 #include "Game.h"
 
-int main(int ergc, char** argv) {
-	sf::RenderWindow *App = new sf::RenderWindow(sf::VideoMode(1300, 700), "Sample_Title", sf::Style::Titlebar | sf::Style::Close);
+int main(int argc, char** argv) {
+	//FreeConsole();
+	sf::RenderWindow *App = new sf::RenderWindow(sf::VideoMode(256*3,232*3), "Zelda2_Demo", sf::Style::Titlebar | sf::Style::Close);
 	App->setFramerateLimit(60);
 	App->setKeyRepeatEnabled(false);
 
@@ -18,7 +21,7 @@ int main(int ergc, char** argv) {
 		game->KeyCheck();
 		game->Rendering();
 		sf::Time elapsed2 = elapsed1 - timer.getElapsedTime();
-		game->delta = -elapsed2.asMilliseconds();
+		game->delta = -elapsed2.asSeconds();
 	}
 	delete game, App;
 	return 0;
