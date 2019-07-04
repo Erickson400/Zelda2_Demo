@@ -7,13 +7,16 @@ Game::Game(sf::RenderWindow *app) : App(app) {
 
 void Game::Update() {
 	intro->Update(delta);
+	playGround->Update(delta, Hkey, Vkey, Space);
 }
 
 void Game::Rendering() {
-	App->clear();
+	char BG = 70;
+	App->clear(sf::Color(BG, BG, BG));
 	App->setView(view1);
 
 	intro->Render(App);
+	playGround->Render(*App);
 
 	App->display();
 }
@@ -28,7 +31,7 @@ void Game::EventHandling() {
 		case sf::Keyboard::A: Left = true; break;
 		case sf::Keyboard::S: Down = true; break;
 		case sf::Keyboard::D: Right = true; break;
-		case sf::Keyboard::Space: intro->Disable(); break;
+		case sf::Keyboard::Space: intro->Disable(); Space = true; playGround->Enable();break;
 		}break;
 	case sf::Event::KeyReleased:
 		switch (event.key.code) {
@@ -84,5 +87,5 @@ void Game::KeyCheck() {
 
 Game::~Game() {
 	App->close();
-	delete  intro, App;
+	delete  intro, playGround, App;
 }
