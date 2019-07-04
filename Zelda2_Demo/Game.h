@@ -5,6 +5,7 @@
 #endif
 #include "Intro.h"
 #include "PlayGround.h"
+#include "HeartsGUI.h"
 
 class Game {
 public:
@@ -16,6 +17,7 @@ public:
 
 	Intro *intro = new Intro();
 	PlayGround *playGround = new PlayGround();
+	HeartsGUI *hearts = new HeartsGUI();
 
 	void Update();
 	void EventHandling();

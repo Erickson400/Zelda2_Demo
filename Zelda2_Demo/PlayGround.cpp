@@ -6,7 +6,7 @@ PlayGround::PlayGround() {
 
 	groundTexture->setRepeated(true);
 	floor->setTexture(*groundTexture, true);
-	floor->setTextureRect(sf::IntRect(0, 0, 300, 64));
+	floor->setTextureRect(sf::IntRect(0, 0, 300, 15));
 	floor->setPosition(sf::Vector2f(1, 200));
 
 	Player->setTexture(*Sheet); // 43, 38
@@ -67,8 +67,6 @@ void PlayGround::Update(float &delta, char &Hkey, char &Vkey, bool &Space) {
 		CheckSpacePress(Space);
 		Space = false;
 	}
-	std::cout << Player->getPosition().x << std::endl;
-	//Player->setPosition(0, 0);
 }
 
 void PlayGround::Render(sf::RenderWindow &window) {

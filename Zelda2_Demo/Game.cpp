@@ -8,6 +8,7 @@ Game::Game(sf::RenderWindow *app) : App(app) {
 void Game::Update() {
 	intro->Update(delta);
 	playGround->Update(delta, Hkey, Vkey, Space);
+	hearts->Update();
 }
 
 void Game::Rendering() {
@@ -17,6 +18,7 @@ void Game::Rendering() {
 
 	intro->Render(App);
 	playGround->Render(*App);
+	hearts->Render(*App);
 
 	App->display();
 }
@@ -31,7 +33,7 @@ void Game::EventHandling() {
 		case sf::Keyboard::A: Left = true; break;
 		case sf::Keyboard::S: Down = true; break;
 		case sf::Keyboard::D: Right = true; break;
-		case sf::Keyboard::Space: intro->Disable(); Space = true; playGround->Enable();break;
+		case sf::Keyboard::Space: Space = true; intro->Disable(); playGround->Enable(); hearts->Enable(); break;
 		}break;
 	case sf::Event::KeyReleased:
 		switch (event.key.code) {
@@ -40,6 +42,15 @@ void Game::EventHandling() {
 		case sf::Keyboard::S: Down = false; break;
 		case sf::Keyboard::D: Right = false; break;
 		}break;
+	case sf::Event::MouseButtonPressed:
+		if (event.mouseButton.button == sf::Mouse::Left) { 
+			if (hearts->active) hearts->addHealth();
+		};
+		break;
+	case sf::Event::MouseWheelMoved: {
+		if(hearts->active) hearts->damage(event.mouseWheel.delta); 
+	};
+	break;
 	}
 }
 
@@ -87,5 +98,5 @@ void Game::KeyCheck() {
 
 Game::~Game() {
 	App->close();
-	delete  intro, playGround, App;
+	delete  hearts, intro, playGround, App;
 }
