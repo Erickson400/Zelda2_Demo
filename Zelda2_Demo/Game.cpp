@@ -3,12 +3,15 @@
 Game::Game(sf::RenderWindow *app) : App(app) {
 	view1.setCenter(sf::Vector2f(256 / 2, 232 / 2));
 	view1.setSize(sf::Vector2f(256, 232));
+	buf->loadFromFile("Media/Sword.wav");
+	sword->setBuffer(*buf);
 }
 
 void Game::Update() {
 	intro->Update(delta);
 	playGround->Update(delta, Hkey, Vkey, Space);
 	hearts->Update();
+	rupee->Update(deltaMilli);
 }
 
 void Game::Rendering() {
@@ -19,7 +22,7 @@ void Game::Rendering() {
 	intro->Render(App);
 	playGround->Render(*App);
 	hearts->Render(*App);
-
+	rupee->Render(*App);
 	App->display();
 }
 
@@ -33,7 +36,9 @@ void Game::EventHandling() {
 		case sf::Keyboard::A: Left = true; break;
 		case sf::Keyboard::S: Down = true; break;
 		case sf::Keyboard::D: Right = true; break;
-		case sf::Keyboard::Space: Space = true; intro->Disable(); playGround->Enable(); hearts->Enable(); break;
+		case sf::Keyboard::Space: sword->play(); Space = true; intro->Disable(); playGround->Enable(); hearts->Enable(); rupee->Enable(); break;
+		case sf::Keyboard::Num1: rupee->setBalance(true, 10); break;
+		case sf::Keyboard::Num2: rupee->setBalance(true, -10); break;
 		}break;
 	case sf::Event::KeyReleased:
 		switch (event.key.code) {
@@ -98,5 +103,5 @@ void Game::KeyCheck() {
 
 Game::~Game() {
 	App->close();
-	delete  hearts, intro, playGround, App;
+	delete  buf, sword, rupee, hearts, intro, playGround, App;
 }
