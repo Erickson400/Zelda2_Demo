@@ -7,7 +7,7 @@
 #include "Game.h"
 
 int main(int argc, char** argv) {
-	//FreeConsole();
+	FreeConsole();
 	sf::RenderWindow *App = new sf::RenderWindow(sf::VideoMode(256*3,232*3), "Zelda2_Demo", sf::Style::Titlebar | sf::Style::Close);
 	App->setFramerateLimit(60);
 	App->setKeyRepeatEnabled(false);
@@ -22,6 +22,7 @@ int main(int argc, char** argv) {
 		game->Rendering();
 		sf::Time elapsed2 = elapsed1 - timer.getElapsedTime();
 		game->delta = -elapsed2.asSeconds();
+		game->deltaMilli = -elapsed2.asMilliseconds();
 	}
 	delete game, App;
 	return 0;
